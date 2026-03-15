@@ -55,8 +55,7 @@
             padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            position: fixed;
+            align-items: center;            
             top: 0;
             left: 0;
             right: 0;
@@ -120,17 +119,18 @@
             display: flex;
             gap: 3rem;
             justify-content: center;
-            flex-wrap: wrap;
-            position: fixed;
-            top: 70px;
+            text-align: center;
             left: 0;
             right: 0;
             height: 60px;
-            align-items: center;
             z-index: 99;
         }
-
-        nav a {
+        nav div {
+            display: flex;
+            align-items: center;
+            width: 100vw;
+        }
+        nav div a {
             color: var(--on-background);
             text-decoration: none;
             font-weight: 500;
@@ -139,6 +139,7 @@
             cursor: pointer;
             padding: 0.5rem 1rem;
             border-radius: 6px;
+            text-align: center;
         }
 
         nav a:hover {
@@ -151,7 +152,7 @@
             color: var(--primary);
             padding: 8rem 2rem 6rem 2rem;
             text-align: center;
-            min-height: 600px;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -394,9 +395,13 @@
 
         .procedures-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: 1fr;
             gap: 2rem;
             margin-top: 2.5rem;
+        }
+
+        .procedures-carousel {
+            display: none;
         }
 
         .procedure-card {
@@ -406,6 +411,7 @@
             padding: 1.8rem;
             border-radius: 8px;
             transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
         }
 
         .procedure-card:hover {
@@ -421,8 +427,9 @@
         }
 
         .procedure-card p {
-            font-size: 0.98rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
         }
 
         .reveal-button {
@@ -744,35 +751,34 @@
             color: var(--secondary);
         }
 
-        .tooltip {
+        .tooltip-popup {
             position: fixed;
-            background: #2a2a35;
+            top: 5%;
+            left: 5%;
+            background: rgba(42, 42, 53, 0.98);
             color: var(--primary);
-            padding: 1.2rem;
+            padding: 1rem;
             border-radius: 8px;
-            box-shadow: 0 8px 32px rgba(179, 157, 219, 0.3);
-            max-width: 350px;
-            z-index: 2000;
-            pointer-events: none;
-            border: 1px solid rgba(212, 165, 116, 0.3);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            opacity: 0;
+            box-shadow: 0 8px 32px rgba(179, 157, 219, 0.4);
+            max-width: 300px;
+            z-index: 3000;
+            pointer-events: auto;
+            border: 1px solid rgba(212, 165, 116, 0.5);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            opacity: 1;
             transition: opacity 0.2s ease-in-out;
         }
 
-        .tooltip.visible {
-            opacity: 1;
-        }
-
-        .tooltip h4 {
-            margin: 0 0 0.8rem 0;
+        .tooltip-popup strong {
             color: var(--secondary);
-            font-size: 1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
         }
 
-        .tooltip p {
-            margin: 0;
+        .tooltip-popup span {
+            color: var(--primary);
         }
     </style>
 </head>
@@ -792,10 +798,12 @@
 
     <!-- Navigation -->
     <nav>
-        <a onclick="showPage('home')">Accueil</a>
-        <a onclick="showPage('produit')">Produit</a>
-        <a onclick="showPage('caracteristiques')">Caractéristiques</a>
-        <a onclick="showPage('contact')">Contact</a>
+        <div>
+            <a onclick="showPage('home')">Accueil</a>
+            <a onclick="showPage('produit')">Produit</a>
+            <a onclick="showPage('caracteristiques')">Caractéristiques</a>
+            <a onclick="showPage('contact')">Contact</a>
+        </div>
     </nav>
 
     <!-- Hero Section -->
@@ -1103,130 +1111,75 @@
                 <button class="close-button" onclick="closeProcedures()">&times;</button>
             </div>
 
-            <div class="procedures-grid">
-                <div class="procedure-card">
+            <div class="procedures-grid"> 
+                <div class="procedure-card" data-argument="Enfumage">
                     <h4>Enfumage</h4>
-                    <p>L'utilisation du terme "Titanium" au lieu de son équivalent français simple "Titane" est une technique classique d'enfumage. Cette terminologie anglaise rend le produit immédiatement plus exotique, moins accessible et suggère une sophistication supérieure. En rendant le langage plus compliqué ou moins familier, on crée une barrière psychologique qui empêche le consommateur d'évaluer rationnellement le produit. Le jargon scientifique ou technique est souvent utilisé intentionnellement pour impressionner et intimider, plutôt que pour clarifier. Cette stratégie exploite la tendance humaine à associer la complexité avec la qualité.</p>
+                    <p>Utilisation de jargon technique "Titanium" au lieu de "Titane" pour rendre un produit plus exotique. Le jargon intimide plutôt que clarifier.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Appel à l'Exotisme">
                     <h4>Appel à l'Exotisme</h4>
-                    <p>La mention répétée de l'extraction du titanium dans des mines "prestigieuses" de Madagascar et du Kenya utilise l'attrait de l'exotisme géographique pour renforcer l'image du produit. Cette stratégie exploite notre fascination innée pour les lieux lointains et mystérieux. Madagascar et le Kenya sont présentés comme des sources magiques de matériaux supérieurs, sans preuve concrète que le minerai de ces pays spécifiques soit meilleur. L'exotisme géographique crée une aura de rareté et de qualité supérieure qui n'est pas justifiée objectivement. Cette manipulation s'appuie sur le pouvoir des mots pour créer des associations mentales. Nous associons automatiquement des lieux exotiques avec le prestige et la qualité premium, indépendamment de toute réalité scientifique.</p>
+                    <p>Présenter une région ou source comme magique/supérieure sans preuve scientifique. L'exotisme crée une aura de qualité artificielle.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Storytelling Émotionnel">
                     <h4>Storytelling Émotionnel</h4>
-                    <p>La narration élaborée sur la visite personnelle des fondateurs dans les mines pour "vérifier les conditions de travail" est un exemple classique de storytelling émotionnel manipulatif. Cette histoire crée une connexion émotionnelle forte et un sentiment d'authenticité rassurante, sans que les conditions réelles ne soient jamais vérifiables ou sourcées. Le storytelling émotionnel est puissant car il crée une relation humaine et émotionnelle avec la marque, ce qui est beaucoup plus influent que les simples caractéristiques techniques. Notre cerveau traite les histoires différemment du texte brut - les histoires résonnent avec notre expérience personnelle et créent un engagement viscéral plus fort. En se présentant comme moralement conscients et soucieux du bien-être des travailleurs, BioTech utilise le storytelling pour construire une image de marque morale, détournant l'attention des performances produit réelles.</p>
+                    <p>Créer une connexion émotionnelle personnelle plutôt que de fournir des faits vérifiables.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Non Sequitur">
                     <h4>Non Sequitur</h4>
-                    <p>L'affirmation que "les matériaux les plus chers sont les plus performants" est présentée comme une vérité universelle, puis utilisée pour conclure que le titanium, puisqu'il coûte plus cher que l'or, serait donc plus performant. Cet argument commet un non sequitur flagrant - la conclusion ne découle pas logiquement des prémisses. En réalité, la relation entre le prix et la performance est complexe et contexte-dépendant. Cette logique ignore complètement les nombreux autres matériaux sur le marché et leurs performances réelles. Un non sequitur est une fallace logique où la conclusion proposée ne suit logiquement pas des prémisses données. C'est particulièrement insidieux car à première lecture, l'argument peut sembler avoir une certaine logique, mais un examen attentif révèle l'absence de lien causal véritable entre les prémisses et la conclusion.</p>
+                    <p>Tirer une conclusion qui ne suit pas logiquement des prémisses. (Cher ≠ meilleur)</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Appel à la Nature">
                     <h4>Appel à la Nature</h4>
-                    <p>L'utilisation du préfixe "Bio" dans "BioTech" pour suggérer une approche naturelle et harmonieuse est un appel direct à la nature (appeal to nature fallacy). Ce terme, bien que potentiellement trompeur puisque la technologie informatique n'a rien d'inhérent au naturel, inspire confiance et légitimité sans justification technique réelle. Les consommateurs associent "bio" avec "naturel", "sain" et "éco-friendly", ce qui transfère automatiquement ces attributs positifs au produit. L'appel à la nature est une fallace logique particulièrement persistante car elle exploite nos intuitions souvent correctes que la nature est généralement plus sûre que les processus synthétiques. Cependant, cette logique s'effondre rapidement si l'on y regarde de près. "Naturel" n'équivaut pas nécessairement à "meilleur". L'arsenic est naturel, mais toxique. La technologie synthétique peut surpasser la nature en matière de fiabilité et de performance.</p>
+                    <p>Suggérer que "naturel" signifie automatiquement meilleur, sûr ou plus éthique.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Faux Dilemme">
                     <h4>Faux Dilemme</h4>
-                    <p>La présentation du choix comme "BioTech ou la concurrence?" en ignore volontairement d'autres alternatives tout à fait légitimes comme AMD, Intel, Qualcomm et d'autres constructeurs. Cette réduction artificielle du choix limite la réflexion critique du consommateur en le forçant à choisir entre deux options présentées comme les seules viables. En présentant un faux dilemme, la publicité crée une urgence décisionnelle artificielle. Le faux dilemme, connu aussi sous le nom de "false binary" ou "dichotomy", est une fallace logique courante. Elle fonctionne en limitant artificiellement les options disponibles à seulement deux possibilités, généralement l'une souhaitable (le produit proposé) et l'autre indésirable (la concurrence). Cette simplification extrême ignore délibérément le spectre complet des choix réels disponibles au consommateur.</p>
+                    <p>Présenter seulement deux options (nous ou rien) en ignorant de nombreuses alternatives réelles.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Appel à la Popularité">
                     <h4>Appel à la Popularité</h4>
-                    <p>Les affirmations que BioTech est "leader du marché avec de nombreux clients" et que nos produits offrent "une qualité supérieure à un prix défiant toute concurrence" créent une illusion de consensus et de popularité sans présenter de données vérifiables. Cette stratégie exploite le phénomène psychologique du "bandwagon effect" (effet de train d'où) - nous tendons à croire quelque chose et à l'adopter si beaucoup d'autres personnes le font. Aucun chiffre de vente réel n'est fourni. Aucune satisfaction clientèle vérifiée n'est citée. L'appel à la popularité fonctionne en affirmant que quelque chose doit être vrai ou bon parce que beaucoup de personnes le croient ou l'acceptent. Psychologiquement, cela exploite notre besoin inné de conformité sociale et notre tendance à supposer que ce qui est populaire est probablement juste ou bon.</p>
+                    <p>Affirmer quelque chose est vrai parce que beaucoup de gens y croient, sans preuve concrète.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Enfumage Technologique">
                     <h4>Enfumage Technologique</h4>
-                    <p>L'utilisation de termes techniques vagues comme "centaines de gigaoctets de RAM" et "le véritable nerf de la guerre" constitue un enfumage technologique délibéré. Ces expressions impressionnantes manquent de clarté et de comparaisons avec des standards réels, créant une confusion intentionnelle. Cette technique exploite le fait que la plupart des consommateurs ne comprennent pas les spécifications téchniques en profondeur. Les grands chiffres et le jargon impressionnant créent une impression de supériorité sans vraie justification. L'enfumage technologique est une forme de manipulation particulièrement efficace dans le domaine de l'électronique car les consommateurs savent qu'ils ne comprennent pas complètement les spécifications. Un producteur honnête fournirait des comparaisons précises avec des produits concurrents spécifiques. Un producteur malhonnête utilise le jargon comme écran de fumée, comptant sur le fait que la plupart des gens ne vont pas vérifier ou ne peuvent pas vérifier ses affirmations.</p>
+                    <p>Utiliser des termes techniques vagues ("centaines", "bio-intégré") pour simuler une légitimité scientifique.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Argument de Position">
                     <h4>Argument de Position</h4>
-                    <p>La mention que les usines sont "aux plus près des clients européens" pour suggérer un avantage logistique et une meilleure qualité est fallacieuse. Cette proximité géographique ne garantit absolument rien sur la qualité réelle du produit fabriqué. La qualité dépend des processus de fabrication, des normes, de la main-d'œuvre et des matériaux utilisés - pas de la distance entre l'usine et le consommateur. Cette fallace fonctionne en suggérant une causalité entre deux phénomènes qui n'ont aucun lien logique. On pourrait argumenter que la proximité réduit les délais de livraison, ce qui est techniquement juste, mais cela n'a absolument aucune relation avec la qualité du produit. Cette confusion intentionnelle entre les avantages logistiques et les avantages de qualité est une manipulation rhétorique classique.</p>
+                    <p>Affirmer que la localisation ou position du produit garantit la qualité ou les performances.</p>
                 </div>
 
-                <div class="procedure-card">
-                    <h4>Urgence Artificielle</h4>
-                    <p>Le compte à rebours "temps limité" crée une pression psychologique intense pour acheter immédiatement sans réfléchir. Cette urgence artificielle pousse les consommateurs à prendre des décisions impulsives plutôt que de considérer soigneusement les caractéristiques réelles du produit. La recherche en psychologie a démontré que l'urgence artificielle augmente considérablement les taux de conversion en contournant la réflexion rationnelle. Ce technique, "scarcity and urgency", est l'une des plus puissantes en marketing de manipulation. Elle fonctionne en déclenchant une réaction primitive de peur de la perte. Lorsque nous craignons de perdre quelque chose, nous réagissons émotionnellement plutôt que rationnellement. Nous oublions de poser les questions critiques: "Ais-je vraiment besoin de cela? Est-ce vraiment une bonne affaire? Cette urgence est-elle réelle ou artificielle?" Le compte à rebours arbitraire crée une fausse urgence conçue spécifiquement pour contourner notre jugement critique.</p>
-                </div>
-
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Pétition de Principe">
                     <h4>Pétition de Principe</h4>
-                    <p>L'affirmation que le titanium est plus performant "puisqu'il est plus cher" utilise le coût comme preuve de la performance elle-même. C'est un raisonnement circulaire qui suppose ce qu'il prétend prouver. La structure logique est: "X est cher, les choses chères sont bonnes, donc X est bon." Mais l'affirmation "les choses chères sont bonnes" n'a jamais été prouvée - elle est simplement présupposée. Cette fallace est particulièrement insidieuse car elle semble raisonnable à première lecture. La pétition de principe (begging the question) est un type de raisonnement circulaire où la conclusion est supposée dans les prémisses. En d'autres termes, on suppose la conclusion qu'on essaye de prouver, créant un cercle logique dépourvu de véritable argumentation. If faut toujours chercher: quelle est la preuve indépendante soutenant cette affirmation? N'est-ce que la réaffirmation d'une affirmation antérieure?</p>
+                    <p>Utiliser un raisonnement circulaire : le prix élevé = preuve de performance = justifie le prix élevé.</p>
                 </div>
 
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Appel à l'Autorité">
                     <h4>Appel à l'Autorité</h4>
-                    <p>L'invocation de "vérités établies" comme "dans le monde entier, les matériaux les plus chers sont les plus performants" sans sources précises ou experts nommés est un appel à l'autorité factice. Aucun expert n'est cité. Aucune étude n'est citée. Aucune donnée concrète n'est fournie. Cette affirmation prétend représenter une sagesse universelle acceptée par tous les experts, ce qui la rend difficile à contredire. L'appel à l'autorité (argumentum ad auctoritatem) est une fallace logique où une affirmation est acceptée car elle est soutenue par une autorité perçue. Cependant, utiliser une "autorité" non spécifiée ou vague est particulièrement malhonnête. Qui sont ces experts? Quelles études supportent cette affirmation? La validité d'une affirmation dépend de la qualité des preuves, pas de l'affirmation d'autorité générale. Un argument basé sur l'autorité ne peut être fort que si cette autorité est spécifiée, crédible, et pertinente au sujet.</p>
+                    <p>Citer des "vérités établies" sans nommer d'experts précis ou fournir de sources.</p>
                 </div>
 
-                <div class="procedure-card">
-                    <h4>Généralisation Abusive</h4>
-                    <p>L'extension d'une caractéristique unique (le coût élevé) à une conclusion globale (la supériorité de performance) sur la base de données insuffisantes est une généralisation abusive (hasty generalization). Le monde réel est complexe et multifactoriel. Le prix dépend de nombreux facteurs: rareté, marketing, branding, distribution, etc. La performance dépend de tout à fait d'autres facteurs: technologie, ingénierie, optimisation, allocation d'énergie. Cette fallace fonctionne en prenant un cas particulier ou une petite corrélation et en la généralisant à une affirmation universelle. L'induction légitime requiert une base de données suffisante et représentative. La généralisation abusive utilise une base de données inadéquate ou biaisée. Combien de cas sont nécessaires pour soutenir cette affirmation? Les données sont-elles représentatives? Existe-t-il des exceptions significatives qui contredisent la généralisation proposée?</p>
-                </div>
-
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Preuve Sociale">
                     <h4>Preuve Sociale</h4>
-                    <p>La suggestion que "nombreux clients" font confiance à BioTech crée une pression psychologique pour que le consommateur suive la foule. Aucun chiffre vérifié n'est fourni - juste la vague allusion à une multitude satisfaite. Nous sommes des créatures sociales programmées pour regarder comment les autres se comportent pour prendre nos propres décisions. Si nous pensons que beaucoup de gens ont déjà acheté quelque chose, nous supposons que c'est probablement une bonne décision. Cette technique de "social proof" ou "consensus heuristique" fonctionne en explorant notre tendance naturelle à chercher des indices sociaux pour valider nos décisions. En l'absence d'informations complètes - et les consommateurs ont rarement accès à toutes les spécifications techniques détaillées des produits - nous regardons ce que font les autres. Si tout le monde achète quelque chose, ce doit être bon, non? Cette logique intuitive est généralement raisonnable, mais elle peut être facilement manipulée.</p>
+                    <p>Affirmer que "nombreux clients" font confiance sans chiffres vérifiés. Crée une pression sociale.</p>
                 </div>
 
-                <div class="procedure-card">
-                    <h4>Biais de Confirmation</h4>
-                    <p>Le site présente exclusivement des informations soutenant l'achat du produit tout en ignorant systématiquement les données contraires. Aucun inconvénient n'est mentionné. Aucun point faible n'est admis. Aucune comparaison défavorable n'est montrée. Cette omission délibérée est un biais de confirmation - nous sommes présentés avec des preuves qui confirment la conclusion souhaitable tout en supprimant les preuves contraires. Le biais de confirmation est un biais cognitif où nous tendons à chercher, interpréter et retenir les informations de manière à confirmer nos croyances préexistantes. C'est un phénomène psychologique universel. Nous tous avons tendance à chercher des preuves qui soutiennent ce que nous croyons Already et ignorer les preuves contraires. Les marketeurs exploitent délibérément ce biais en présentant uniquement les informations positives. Un consommateur critique chercherait activement des avis négatifs, des critiques d'experts, et des comparaisons avec les produits concurrents avant de faire une décision.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Fausseté Affective</h4>
-                    <p>L'utilisation minutieuse du design - gradients de couleur attrayants, mise en page soignée, polices élégantes, images professionnelles - crée une sensation viscérale de qualité et de prestige, indépendamment des caractéristiques réelles du produit. Notre cerveau associe rapidement "beau design" avec "produit de qualité". Cette association est rapide, émotionnelle et souvent inexacte. Un design sophistiqué ne dit rien sur la performance technique réelle. Cette technique est appelée "fausseté affective" car elle utilise les réactions affectives (émotionnelles) plutôt que rationnelles pour manipuler notre jugement. C'est particulièrement efficace sur Internet où le design peut être créé puis reproché peu coûteux. Un site magnifiquement conçu crée une impression d'authenticité et de qualité avant même que le consommateur n'examine les affirmations factuelles du produit. Nos cerveaux sont éviluément programmés pour faire confiance à ce qui est beau. La beauté a historiquement signalé la qualité et l'importance. Les marketeurs exploitent cette tendance ancestrale.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Technique du Pied dans la Porte</h4>
-                    <p>La technique du "pied dans la porte" (foot-in-the-door technique) est une stratégie persuasive classique qui fonctionne en deux phases: d'abord une demande faible et inoffensive (regarder le produit), puis une demande beaucoup plus importante (faire un achat). Le site commence innocemment - il vous invite simplement à explorer les caractéristiques du produit et à comprendre ses avantages. Une fois que vous êtes engagé - que vous avez cliqué, lu, regardé les images - l'étape suivante (ajouter au panier) semble être une progression naturelle et logique. La recherche en psychologie sociale a montré que une fois qu'une personne accepte une petite demande, elle est plus susceptible d'accepter une demande plus importante ultérieurement. Cette technique exploite le principe de cohérence: nous voulons être cohérents dans nos paroles et nos actions, et nous tendons à justifier nos actions antérieures.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Ancrage Psychologique</h4>
-                    <p>L'ancrage psychologique (anchoring bias) est une technique où le premier nombre présenté - le prix très élevé de 1299€ - devient un point de référence mental à partir duquel tous les jugements ultérieurs sont évalués. Même si vous ne l'achetez pas, ce prix élevé devient votre "ancre". Si, par la suite, vous voyez un produit similaire à 599€, vous penserez que c'est une affaire, même si ce prix était auparavant considéré comme cher. Le cerveau utilise les informations numériques initiales comme point de référence pour les estimations ultérieures. Cette technique est d'une puissance remarquable car elle affecte notre perception de la valeur de façon inconsciente. Les négociants automobiles, les détaillants, et les marketeurs en ligne utilisent systématiquement cette technique. Ils définissent d'abord un prix d'ancrage élevé, puis proposent des "réductions" qui semblent spectaculaires parce qu'elles semblent énormes comparées à l'ancre, même si le prix final reste élevé par rapport aux alternatives du marché.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Hypothèse de Base Douteuse</h4>
-                    <p>L'hypothèse de base douteuse (questionable premise) est une fallace logique qui accepte comme vraies des suppositions non prouvées et les utilise comme base pour des arguments ultérieurs. Le site affirme sans preuve que "le titanium africain est meilleur" et que "les micro-organismes modifiés créent un refroidissement supérieur". Aucune explication scientifique n'est fournie. Aucune étude ne soutient ces affirmations. Ces présuppositions douteuses deviennent le fondement sur lequel reposent tous les autres arguments. Si les prémisses sont faibles ou fausses, toute conclusion basée sur elles s'effondre. C'est comme construire une maison sur du sable mouvant - peu importe how propre est le reste de la construction, si le fondement est faible, la structure entière est compromise. Un argument solide exige des prémisses solides. Chaque affirmation extraordinaire exige des preuves extraordinaires.</p>
-                </div>
-
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Appel à l'Exclusivité">
                     <h4>Appel à l'Exclusivité</h4>
-                    <p>L'affirmation que BioTech est "le seul constructeur au monde" à utiliser cette technologie crée un sentiment de rareté et d'accès privilégié. Cette affirmation, sans preuves, suggère que vous accédez à quelque chose d'unique que personne d'autre n'a. Le désir humain de possession exclusive et de distinction sociale est exploité ici. Si quelque chose est unique, c'est précieux par définition. Cette technique exploite notre besoin de statut et de distinction sociale. Nous voulons posséder des choses que d'autres n'ont pas. Nous voulons être différents, spéciaux, au-dessus du reste. L'exclusivité satisfait ce désir psychologique profond. En affirmant l'unicité - sans fournir de preuves - BioTech crée un sentiment d'opportunité exclusive. C'est votre chance unique d'accéder à quelque chose que personne d'autre ne possède.</p>
+                    <p>Affirmer être "le seul" ou "unique" crée une sensation de rareté artificielle et désirable.</p>
                 </div>
 
-                <div class="procedure-card">
-                    <h4>Statistiques Sorties de Contexte</h4>
-                    <p>L'affirmation d'"amélioration de 340%" sans comparaison claire, sans définition de ce qui est mesuré, et sans contexte, utilise des statistiques de manière trompeuse. Amélioration par rapport à quoi? Amélioration de quoi exactement est-elle mesurée? Le chiffre 340% est choisi pour impressionner mais sans contexte réel, ce grand nombre devient un tour de passe-passe statistique. Un nombre sans contexte est dépourvu de sens. Si une entreprise affirme "amélioration de 340%", elle doit répondre à plusieurs questions critiques: Comparé à quel produit précis? Selon quelle métrique exact? Sur quelle période? Basé sur quelles données? Un vrai statistique honnête fournirait ce contexte. En omettant délibérément le contexte, BioTech utilise les chiffres pour impressionner plutôt que pour informer. Les chiffres grand et les pourcentages sont psychologiquement impressionnants, mais sans contexte, ils sont complètement dénués de sens.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Argument Fondée sur la Fallacie d'Autorité</h4>
-                    <p>L'implication que BioTech a une expertise incontestable sans présentation de qualifications ou d'études est une variante subtile de la fallace d'autorité. Le site se présente avec tellement de confiance, tellement de certitude, tellement de conviction, qu'il se positionne implicitement comme une autorité. Mais sur quoi repose cette autorité? Des brevets? Non, rien n'est mentionné. Des études scientifiques? Aucune citation. Des certifications industrielles? Aucune mentionnée. Juste l'affirmation confiante d'expertise. L'absence d'affirmation explicite d'autorité rend cette technique subtile et difficile à combattre. Le ton confiant et professionnel crée une impression d'expertise sans que celle-ci soit jamais prouvée. Une entreprise honnête fournirait des preuves concrètes de son expertise - brevets, certifications, études, prix industriels, partenariats avec des universités ou des institutions reconnues.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Glissement Sémantique</h4>
-                    <p>Le glissement sémantique (equivocation) est un changement subtil du sens d'un mot au cours d'un argument. Le mot "titanium" est utilisé de façon à sembler précis et scientifique, mais il reste délibérément vague sur ses spécifications exactes. Est-ce du titanium pur? Quel alliage? Quel poids? Quel pourcentage du produit? En gardant le terme vague, le processus de marketing peut projeter sur le mot "titanium" tous les attributs positifs associés à ce métal sans avoir à justifier ces affirmations spécifiques. Lorsqu'un mot change subtilement de sens au cours d'un argument, le raisonnement logique s'effondre, mais nous ne remarquons pas toujours le changement subtil. Un terme scientifique qui semble précis crée une fausse sensation de spécificité technique alors que le terme reste essentiellement sans définition.</p>
-                </div>
-
-                <div class="procedure-card">
-                    <h4>Complexité Intentionnelle</h4>
-                    <p>L'utilisation de termes techniques complexes comme "système de refroidissement bio-intégré", "micro-organismes modifiés", "NPU (Neural Processor Unit)" pour impressionner plutôt que pour clarifier est une stratégie délibérée. Ces termes sont souvent incompréhensibles pour la plupart des consommateurs. La complexité elle-même devient un argument: "si je ne comprends pas, c'est probablement très avancé". Cette technique exploite l'effet d'autorité par la complexité - nous supposons que quelque chose de compliqué doit être supérieur et plus avancé que quelque chose de simple. En marketing, cela s'appelle "technobabble" - l'utilisation intentionnelle de jargon technique pour impressionner et confondre plutôt que pour clarifier. Un produit réellement innovant doit être capable d'expliquer ses avantages en termes compréhensibles. Si une explication est délibérément compliquée et incompréhensible, c'est un drapeau rouge qu'il y a quelque chose à cacher.</p>
-                </div>
-
-                <div class="procedure-card">
+                <div class="procedure-card" data-argument="Évasion Stratégique">
                     <h4>Évasion Stratégique</h4>
-                    <p>Le site ne fournit jamais de détails spécifiques et vérifiables sur les vraies capacités techniques du produit - juste des affirmations générales impressionnantes qui sont difficiles à réfuter car elles sont trop vagues. "Performance ultime", "technologie révolutionnaire", "l'avancée technologique la plus significative" - ces affirmations sonnent magnifiques mais sont complètement non-testables et non-réfutables. L'évasion stratégique fonctionne en utilisant des affirmations impossibles à contredire faute de précision. Comment retomper "l'avancée technologique la plus significative"? Comment contester une "performance ultime"? Ces termes sont si vagues qu'ils ne signifient rien de spécifique mais semblent significatifs. Une entreprise honnête fournirait des spécifications mesurables: "Notre processeur exécute X opérations par seconde", "Notre système de refroidissement réduit la température à Y degrés", "La latence est de Z millisecondes". L'absence de ces détails spécifiques et mesurables est une indication claire que le produit ne peut pas livrer les affirmations extraordinaires faites.</p>
+                    <p>Donner seulement des affirmations vagues et impossibles à réfuter avec des faits spécifiques.</p>
                 </div>
             </div>
         </div>
@@ -1314,9 +1267,11 @@
 
         function closeProcedures() {
             proceduresModal.classList.remove('active');
+            if (activeTooltip) {
+                activeTooltip.remove();
+                activeTooltip = null;
+            }
         }
-
-        document.getElementById('closeProcedures') = closeProcedures;
 
         proceduresModal.addEventListener('click', (e) => {
             if (e.target === proceduresModal) {
@@ -1352,92 +1307,71 @@
 
         updateTimer();
 
-        // Tooltip System
+        // Global descriptions object - MODIFY HERE FOR ALL DESCRIPTIONS
         const argumentDescriptions = {
-            'Enfumage': 'L\'utilisation du terme "Titanium" au lieu de son équivalent français simple "Titane" est une technique classique d\'enfumage. Cette terminologie anglaise rend le produit immédiatement plus exotique, moins accessible et suggère une sophistication supérieure.',
-            'Appel à l\'Exotisme': 'La mention répétée de l\'extraction du titanium dans des mines "prestigieuses" de Madagascar et du Kenya utilise l\'attrait de l\'exotisme géographique pour renforcer l\'image du produit.',
-            'Storytelling Émotionnel': 'La narration élaborée sur la visite personnelle des fondateurs dans les mines pour "vérifier les conditions de travail" est un exemple classique de storytelling émotionnel manipulatif.',
-            'Non Sequitur': 'L\'affirmation que "les matériaux les plus chers sont les plus performants" est présentée comme une vérité universelle, puis utilisée pour conclure que le titanium serait donc plus performant.',
-            'Appel à la Nature': 'L\'utilisation du préfixe "Bio" dans "BioTech" pour suggérer une approche naturelle est un appel direct à la nature qui inspire confiance sans justification technique réelle.',
-            'Faux Dilemme': 'La présentation du choix comme "BioTech ou la concurrence?" en ignore volontairement d\'autres alternatives tout à fait légitimes.',
-            'Appel à la Popularité': 'Les affirmations que BioTech est "leader du marché avec de nombreux clients" créent une illusion de consensus sans présenter de données vérifiables.',
-            'Enfumage Technologique': 'L\'utilisation de termes techniques vagues comme "centaines de gigaoctets" et "le véritable nerf de la guerre" constitue un enfumage technologique délibéré.',
-            'Argument de Position': 'La mention que les usines sont "aux plus près des clients européens" pour suggérer un avantage logistique ne garantit absolument rien sur la qualité réelle du produit.',
-            'Urgence Artificielle': 'Le compte à rebours "temps limité" crée une pression psychologique intense pour acheter immédiatement sans réfléchir.',
-            'Pétition de Principe': 'L\'affirmation que le titanium est plus performant "puisqu\'il est plus cher" utilise le coût comme preuve de la performance elle-même.',
-            'Appel à l\'Autorité': 'L\'invocation de "vérités établies" sans sources précises ou experts nommés est un appel à l\'autorité factice.',
-            'Généralisation Abusive': 'L\'extension d\'une caractéristique unique (le coût élevé) à une conclusion globale (la supériorité de performance).',
-            'Preuve Sociale': 'La suggestion que "nombreux clients" font confiance à BioTech crée une pression psychologique pour suivre la foule.',
-            'Biais de Confirmation': 'Le site présente exclusivement des informations soutenant l\'achat du produit en ignorant systématiquement les données contraires.',
-            'Fausseté Affective': 'L\'utilisation minutieuse du design - gradients de couleur attrayants, mise en page soignée - crée une sensation viscérale de qualité indépendamment des caractéristiques réelles.',
-            'Technique du Pied dans la Porte': 'La technique qui fonctionne en deux phases: d\'abord une demande faible (regarder le produit), puis une demande plus importante (achat).',
-            'Ancrage Psychologique': 'Le prix très élevé de 1299€ devient un point de référence mental à partir duquel tous les jugements ultérieurs sont évalués.',
-            'Hypothèse de Base Douteuse': 'Suppositions non prouvées acceptées comme vraies et utilisées comme base pour des arguments ultérieurs.',
-            'Appel à l\'Exclusivité': 'L\'affirmation que BioTech est "le seul constructeur au monde" crée un sentiment de rareté et d\'accès privilégié.',
-            'Statistiques Sorties de Contexte': 'L\'affirmation d\'amélioration sans comparaison claire ni définition de ce qui est mesuré utilise les statistiques de manière trompeuse.',
-            'Glissement Sémantique': 'Le mot "titanium" est utilisé de façon à sembler précis et scientifique, mais il reste délibérément vague sur ses spécifications exactes.',
-            'Complexité Intentionnelle': 'L\'utilisation de termes techniques complexes "NPU", "micro-organismes modifiés" pour impressionner plutôt que pour clarifier.',
-            'Évasion Stratégique': 'Le site ne fournit jamais de détails spécifiques et vérifiables sur les vraies capacités - juste des affirmations générales impressionnantes.'
+            'Enfumage': 'Utilisation de "Titanium" au lieu de "Titane" pour rendre le produit plus exotique. Le jargon technique intimide plutôt que clarifier.',
+            'Appel à l\'Exotisme': 'Présenter une région ou source comme magique/supérieure sans preuve scientifique. L\'exotisme crée une aura de qualité artificielle.',
+            'Storytelling Émotionnel': 'Créer une connexion émotionnelle personnelle plutôt que de fournir des faits vérifiables.',
+            'Non Sequitur': 'Tirer une conclusion qui ne suit pas logiquement des prémisses. (Cher ≠ meilleur)',
+            'Appel à la Nature': 'Suggérer que "naturel" signifie automatiquement meilleur, sûr ou plus éthique.',
+            'Faux Dilemme': 'Présenter seulement deux options (nous ou rien) en ignorant de nombreuses alternatives.',
+            'Appel à la Popularité': 'Affirmer quelque chose est vrai parce que beaucoup de gens y croient, sans preuve.',
+            'Enfumage Technologique': 'Utiliser des termes techniques vagues ("centaines", "bio-intégré") pour simuler la science.',
+            'Argument de Position': 'Affirmer que la localisation ou position du produit garantit la qualité (ce qui est faux).',
+            'Pétition de Principe': 'Utiliser une circulaire : le prix élevé = preuve de performance = justifie le prix élevé.',
+            'Appel à l\'Autorité': 'Citer des "vérités établies" sans nommer d\'experts ou sources précises.',
+            'Preuve Sociale': 'Affirmer que "nombreux clients" font confiance sans chiffres vérifiés. Crée pression sociale.',
+            'Appel à l\'Exclusivité': 'Affirmer être "le seul" ou "unique" crée une sensation de rareté artificielle.',
+            'Évasion Stratégique': 'Donner seulement des affirmations vagues impossibles à réfuter avec des faits spécifiques.'
         };
 
-        function initTooltips() {
-            const tooltipMarkers = document.querySelectorAll('.tooltip-marker');
-            
-            tooltipMarkers.forEach(marker => {
-                const argumentName = marker.getAttribute('data-argument');
+        // Tooltip on click system - DYNAMIC with clicked text
+        let activeTooltip = null;
+        document.addEventListener('click', (e) => {
+            // Check if clicking on tooltip-marker
+            if (e.target.classList.contains('tooltip-marker')) {
+                const argumentName = e.target.getAttribute('data-argument');
+                const clickedText = e.target.textContent.trim();
+                const description = argumentDescriptions[argumentName];
                 
-                marker.addEventListener('mouseenter', (e) => {
-                    const description = argumentDescriptions[argumentName];
-                    if (description) {
-                        const tooltip = document.createElement('div');
-                        tooltip.className = 'tooltip';
-                        tooltip.setAttribute('role', 'tooltip');
-                        tooltip.innerHTML = `<strong>${argumentName}</strong><br>${description}`;
-                        
-                        document.body.appendChild(tooltip);
-                        
-                        // Position tooltip
-                        const markerRect = marker.getBoundingClientRect();
-                        let top = markerRect.bottom + 10;
-                        let left = markerRect.left + (markerRect.width / 2) - 175;
-                        
-                        // Adjust if tooltip goes off screen right
-                        if (left + 350 > window.innerWidth) {
-                            left = window.innerWidth - 360;
-                        }
-                        // Adjust if tooltip goes off screen left
-                        if (left < 10) {
-                            left = 10;
-                        }
-                        // Adjust if tooltip goes off screen bottom
-                        if (top + 150 > window.innerHeight) {
-                            top = markerRect.top - 160;
-                        }
-                        
-                        tooltip.style.top = top + 'px';
-                        tooltip.style.left = left + 'px';
-                        
-                        marker.tooltipElement = tooltip;
-                        setTimeout(() => {
-                            tooltip.classList.add('visible');
-                        }, 5);
-                    }
-                });
-                
-                marker.addEventListener('mouseleave', () => {
-                    if (marker.tooltipElement) {
-                        marker.tooltipElement.classList.remove('visible');
-                        setTimeout(() => {
-                            marker.tooltipElement.remove();
-                            marker.tooltipElement = null;
-                        }, 200);
-                    }
-                });
-            });
-        }
+                if (description && argumentName) {
+                    // Remove existing tooltip
+                    if (activeTooltip) activeTooltip.remove();
+                    
+                    // Create and show tooltip with dynamic content
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip-popup';
+                    tooltip.innerHTML = `<strong>${argumentName}</strong><br><span style="color: var(--secondary); font-style: italic;">"${clickedText}"</span><br><br>${description}`;
+                    document.body.appendChild(tooltip);
+                    activeTooltip = tooltip;
+                }
+            } else if (activeTooltip && !e.target.closest('.tooltip-popup')) {
+                // Close tooltip if clicking elsewhere
+                activeTooltip.remove();
+                activeTooltip = null;
+            }
+        });
 
-        // Initialize tooltips when the page loads
-        window.addEventListener('load', initTooltips);
+        // Procedure cards click for tooltip (in modal)
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.procedure-card')) {
+                const card = e.target.closest('.procedure-card');
+                const argumentName = card.getAttribute('data-argument');
+                const description = argumentDescriptions[argumentName];
+                
+                if (description && argumentName) {
+                    // Remove existing tooltip
+                    if (activeTooltip) activeTooltip.remove();
+                    
+                    // Create and show tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip-popup';
+                    tooltip.innerHTML = `<strong>${argumentName}</strong><br>${description}`;
+                    document.body.appendChild(tooltip);
+                    activeTooltip = tooltip;
+                }
+            }
+        });
     </script>
 </body>
 </html>
