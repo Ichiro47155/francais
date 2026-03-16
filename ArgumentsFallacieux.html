@@ -3,1264 +3,319 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioTech Titanium - Carte Graphique IA Nouvelle Génération</title>
+    <title>BioTech - NeuralTitanX</title>
+    <!-- Tailwind CSS pour le style rapide -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts pour Roboto et Material Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    
+    <script>
+        // Configuration Tailwind pour simuler Material Design 3 (Thème sombre)
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        md: {
+                            bg: '#141218',
+                            surface: '#211F26',
+                            surfaceVariant: '#49454F',
+                            primary: '#D0BCFF', // Violet pâle
+                            onPrimary: '#381E72',
+                            primaryContainer: '#4F378B',
+                            gold: '#FFDEAC', // Accent doré
+                            goldContainer: '#5c4515',
+                            text: '#E6E0E9',
+                            textMuted: '#CAC4D0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #b39ddb;
-            --on-primary: #2d1b4e;
-            --primary-container: #4f378b;
-            --on-primary-container: #eaddff;
-            --secondary: #d4a574;
-            --on-secondary: #2d2318;
-            --secondary-container: #4a4458;
-            --tertiary: #f0b9d8;
-            --on-tertiary: #402843;
-            --tertiary-container: #603950;
-            --error: #f2b8b5;
-            --on-error: #601410;
-            --error-container: #8c1d18;
-            --background: #0a0a0e;
-            --on-background: #e6e1e6;
-            --surface: #141419;
-            --on-surface: #f5f5f5;
-            --surface-variant: #2a2a35;
-            --on-surface-variant: #c0c0cc;
-            --outline: #938f99;
-            --outline-variant: #49454e;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
+            background-color: #141218;
+            color: #E6E0E9;
             font-family: 'Roboto', sans-serif;
-            background-color: var(--background);
-            color: var(--on-background);
-            transition: background-color 0.3s, color 0.3s;
-            line-height: 1.6;
-            padding-top: 0;
         }
-
-        header {
-            background: #1a1a24;
-            color: var(--primary);
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;            
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            box-shadow: 0 4px 12px rgba(179, 157, 219, 0.2);
-            gap: 1rem;
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            cursor: pointer;
-        }
-
-        .logo img {
-            width: 40px;
-            height: 40px;
-            display: inline-block;
-            margin-right: 0.5rem;
-            vertical-align: middle;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .theme-switcher {
-            display: none;
-        }
-
-        .cart-link {
-            background: var(--secondary);
-            color: var(--on-secondary);
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: transform 0.2s, background 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .cart-link:hover {
-            background: #e6b88a;
-            transform: translateY(-2px);
-        }
-
-        nav {
-            background: #1a1a24;
-            border-bottom: 1px solid rgba(179, 157, 219, 0.1);
-            padding: 0 2rem;
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-            text-align: center;
-            left: 0;
-            right: 0;
-            height: 60px;
-            z-index: 99;
-        }
-        nav div {
-            display: flex;
-            align-items: center;
-            width: 100vw;
-        }
-        nav div a {
-            color: var(--on-background);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        nav a:hover {
-            color: var(--secondary);
-            background: rgba(212, 165, 116, 0.1);
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #2d1b4e 0%, #3d2a5f 100%);
-            color: var(--primary);
-            padding: 8rem 2rem 6rem 2rem;
-            text-align: center;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            margin-top: 130px;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            letter-spacing: -1px;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            max-width: 800px;
-            opacity: 0.95;
-            line-height: 1.8;
-        }
-
-        .cta-button {
-            background: var(--on-primary);
-            color: var(--primary);
-            border: none;
-            padding: 1.2rem 2.5rem;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        section {
-            padding: 5rem 2rem;
-            margin-top: 0;
-        }
-
-        section.short-section {
-            padding: 3rem 2rem;
-        }
-
-        section h2 {
-            font-size: 2.8rem;
-            margin-bottom: 3rem;
-            color: var(--primary);
-            text-align: center;
-            font-weight: 700;
-        }
-
-        section h3 {
-            font-size: 1.9rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .card {
-            background: var(--surface-variant);
-            color: var(--on-surface);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            transition: box-shadow 0.2s, transform 0.2s;
-            line-height: 1.8;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-            transform: translateY(-2px);
-        }
-
-        .card p {
-            margin-bottom: 1.2rem;
-            font-size: 1.05rem;
-        }
-
-        .card p:last-child {
-            margin-bottom: 0;
-        }
-
-        .product-image {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 12px;
-            margin: 2rem auto;
-            display: block;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .spec-item {
-            background: var(--primary-container);
-            color: var(--on-primary-container);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-
-        .spec-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .spec-label {
-            font-size: 0.95rem;
-            opacity: 0.85;
-            font-weight: 500;
-        }
-
-        .promo-banner {
-            background: linear-gradient(135deg, var(--tertiary) 0%, var(--secondary) 100%);
-            color: var(--on-tertiary);
-            padding: 4rem 2rem;
-            border-radius: 12px;
-            text-align: center;
-            margin: 3rem 0;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
-
-        .promo-banner h3 {
-            color: var(--on-tertiary);
-            font-size: 2.3rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .promo-banner p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-        }
-
-        .timer {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .time-unit {
-            background: rgba(0,0,0,0.2);
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 90px;
-        }
-
-        .time-value {
-            font-size: 2rem;
-            font-weight: 700;
-            display: block;
-        }
-
-        .time-label {
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            opacity: 0.95;
-            font-weight: 500;
-        }
-
-        .procedures-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 2rem 0;
-        }
-
-        .procedures-modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        .procedures-content {
-            background: var(--background);
-            max-width: 1200px;
-            width: 90%;
-            border-radius: 12px;
-            padding: 3rem;
-            margin-top: 2rem;
-            position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-
-        .close-button {
-            position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
-            background: var(--primary);
-            color: var(--on-primary);
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        .close-button:hover {
-            transform: scale(1.1);
-        }
-
-        .procedures-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 2.5rem;
-        }
-
-        .procedures-carousel {
-            display: none;
-        }
-
-        .procedure-card {
-            background: var(--primary-container);
-            color: var(--on-primary-container);
-            border-left: 5px solid var(--primary);
-            padding: 1.8rem;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-        }
-
-        .procedure-card:hover {
-            transform: translateX(4px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .procedure-card h4 {
-            color: var(--primary);
-            margin-bottom: 0.8rem;
-            font-size: 1.15rem;
-            font-weight: 600;
-        }
-
-        .procedure-card p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .reveal-button {
-            background: var(--primary);
-            color: var(--on-primary);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            margin: 2rem auto;
-            display: block;
-        }
-
-        .reveal-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-
-        /* Cart Modal */
-        .cart-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-
-        .cart-modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .cart-content {
-            background: var(--background);
-            max-width: 600px;
-            width: 90%;
-            border-radius: 12px;
-            padding: 3rem;
-            position: relative;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-        }
-
-        .cart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--outline-variant);
-            padding-bottom: 1rem;
-        }
-
-        .cart-item {
-            background: var(--surface-variant);
-            padding: 1.5rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .cart-total {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 2rem 0;
-        }
-
-        .checkout-button {
-            background: var(--error);
-            color: var(--on-error);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .checkout-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-
-        /* Checkout Page */
-        .checkout-page {
-            display: none;
-        }
-
-        .checkout-page.active {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--on-background);
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid var(--outline-variant);
-            border-radius: 8px;
-            font-family: 'Roboto', sans-serif;
-            font-size: 1rem;
-            background: var(--surface);
-            color: var(--on-surface);
-            transition: border-color 0.2s;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .confirmation-page {
-            display: none;
-            text-align: center;
-            padding: 6rem 2rem;
-        }
-
-        .confirmation-page.active {
-            display: block;
-        }
-
-        .confirmation-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .confirmation-title {
-            font-size: 3rem;
-            color: var(--error);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .confirmation-message {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .confirmation-details {
-            background: var(--surface-variant);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            text-align: left;
-        }
-
-        .confirmation-details p {
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        footer {
-            background: var(--surface-variant);
-            color: var(--on-surface-variant);
-            text-align: center;
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--outline-variant);
-        }
-
-        footer p {
-            font-size: 0.95rem;
-        }
-
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-        }
-
-        /* Image-Text Layout */
-        .image-text-block {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-
-        .image-text-block.reverse {
-            grid-template-columns: 1fr 1fr;
-            direction: rtl;
-        }
-
-        .image-text-block.reverse > * {
-            direction: ltr;
-        }
-
-        .image-text-block img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(179, 157, 219, 0.15);
-            display: block;
-        }
-
-        .image-text-block .text-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
-            }
-
-            nav {
-                gap: 1.5rem;
-                padding: 1rem 0.5rem;
-                flex-direction: row;
-                width: 100%;
-                justify-content: flex-start;
-                overflow-x: auto;
-                top: 60px;
-                height: auto;
-            }
-
-            .image-text-block {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .image-text-block.reverse {
-                grid-template-columns: 1fr;
-                direction: ltr;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-
-            .hero p {
-                font-size: 0.95rem;
-            }
-
-            section {
-                padding: 3rem 1.5rem;
-            }
-
-            section h2 {
-                font-size: 1.8rem;
-                margin-bottom: 2rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .cart-content {
-                width: 95%;
-                padding: 1.5rem;
-            }
-
-            .confirmation-title {
-                font-size: 2rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            header {
-                padding: 0.8rem;
-            }
-
-            .logo {
-                font-size: 1rem;
-            }
-
-            nav {
-                gap: 1rem;
-                padding: 0.8rem;
-            }
-
-            .hero h1 {
-                font-size: 1.4rem;
-            }
-
-            section {
-                padding: 2rem 1rem;
-            }
+        /* Style de la barre de défilement */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #211F26; }
+        ::-webkit-scrollbar-thumb { background: #49454F; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D0BCFF; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Animation subtile pour le bouton d'achat */
+        @keyframes pulse-gold {
+            0% { box-shadow: 0 0 0 0 rgba(255, 222, 172, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 222, 172, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 222, 172, 0); }
+        }
+        .btn-promo {
+            animation: pulse-gold 2s infinite;
         }
     </style>
 </head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <div class="logo" onclick="showPage('home')">
-                <img src="images/logo.png" alt="BioTech Logo" style="width: 30px; height: 30px;">
-                BioTech
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <header class="bg-md-surface sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <!-- Emplacement Logo -->
+                <img src="/images/logo.png" alt="Prompt pour générer : Un logo minimaliste et moderne pour une entreprise nommée BioTech, combinant une feuille verte subtile et un circuit imprimé violet et doré, fond transparent" class="h-10 w-10 object-contain bg-md-surfaceVariant rounded-full p-1">
+                <span class="text-md-primary text-2xl font-bold tracking-tight">BioTech</span>
             </div>
-        </div>
-        <div class="header-actions">
-            <button class="cart-link" id="cartBtn">Panier</button>
+            <nav class="hidden md:flex gap-6">
+                <a href="#titanium" class="text-md-text hover:text-md-primary transition">Technologie Titanium</a>
+                <a href="#biotech" class="text-md-text hover:text-md-primary transition">La Différence BioTech</a>
+            </nav>
+            <button class="bg-md-primary text-md-onPrimary px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition">
+                Commander
+            </button>
         </div>
     </header>
 
-    <!-- Navigation -->
-    <nav>
-        <div>
-            <a onclick="showPage('home')">Accueil</a>
-            <a onclick="showPage('produit')">Produit</a>
-            <a onclick="showPage('caracteristiques')">Caractéristiques</a>
-            <a onclick="showPage('contact')">Contact</a>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>BioTech Titanium</h1>
-        <p>La carte graphique IA en titanium pour une vitesse et une extraite directement des mines de Madagascar et du Kenya</p>
-        <button class="cta-button" onclick="showPage('produit')">Découvrir</button>
-    </section>
-
-    <!-- Main Content -->
-    <main id="mainContent">
-        <!-- Home Page -->
-        <section id="home" class="page-section active container">
-            <h2>Bienvenue sur BioTech</h2>
-            
-            <div class="card">
-                <h3>Une Révolution Technologique</h3>
-                <p>
-                    BioTech Titanium représente l'avancée technologique la plus significative de la décennie. 
-                    Notre système utilise les matériaux les plus avancés pour vous offrir la performance ultime.
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <div class="card">
-                <h3>Pourquoi Choisir BioTech</h3>
-                <p>
-                    Nous sommes le seul constructeur au monde à utiliser le titanium extrait directement d'Afrique de l'Est.
-                    Notre engagement envers l'excellence et l'éthique nous distingue de la concurrence.
-                </p>
-                <p style="margin-top: 1rem;">
-                    Rejoignez les milliers de clients satisfaits qui ont déjà transformé leur expérience informatique.
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <div class="promo-banner">
-                <h3>OFFRE EXCLUSIVE</h3>
-                <p>45% de réduction + Livraison gratuite</p>
-                
-                <div class="timer">
-                    <div class="time-unit">
-                        <span class="time-value" id="days">00</span>
-                        <span class="time-label">Jours</span>
+    <main class="flex-grow">
+        <!-- Hero Section -->
+        <section class="relative py-20 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 flex flex-col gap-6 z-10">
+                    <div class="inline-flex items-center gap-2 bg-md-primaryContainer text-md-primary px-4 py-1.5 rounded-full w-max text-sm font-medium">
+                        <span class="material-symbols-outlined text-sm">memory</span>
+                        Nouveau NPU NeuralTitanX
                     </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="hours">00</span>
-                        <span class="time-label">Heures</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="minutes">00</span>
-                        <span class="time-label">Minutes</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-value" id="seconds">00</span>
-                        <span class="time-label">Secondes</span>
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                        L'intelligence <span class="text-md-primary">naturelle</span>,<br>
+                        puissance <span class="text-md-gold">Titanium</span>.
+                    </h1>
+                    <p class="text-lg text-md-textMuted max-w-xl">
+                        Rejoignez l'élite. La première carte graphique conçue avec des circuits purs, respectueuse de sa nature, et dotée d'une puissance brute inégalée grâce à notre technologie organique.
+                    </p>
+                    
+                    <!-- Faux sentiment d'urgence -->
+                    <div class="bg-md-surface p-6 rounded-3xl border border-md-surfaceVariant shadow-lg mt-4 max-w-md">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-md-gold font-bold">Offre de lancement exclusive</span>
+                            <span class="text-2xl font-mono font-bold text-md-text" id="countdown">14:59</span>
+                        </div>
+                        <button class="btn-promo w-full bg-md-gold text-md-goldContainer py-3 rounded-full font-bold text-lg hover:bg-opacity-90 transition">
+                            Profiter de -50% maintenant
+                        </button>
+                        <p class="text-xs text-center text-md-textMuted mt-3">Attention, les stocks de Titanium sont extrêmement limités !</p>
                     </div>
                 </div>
                 
-                <button class="cta-button" onclick="addToCart(); showPage('produit');">Acheter Maintenant</button>
+                <div class="lg:w-1/2 relative">
+                    <!-- Emplacement Carte Graphique -->
+                    <div class="absolute inset-0 bg-md-primary opacity-20 blur-3xl rounded-full"></div>
+                    <img src="/images/CarteGraphique.png" alt="Prompt pour générer : Une carte graphique d'ordinateur futuriste, très haut de gamme, noire mate avec des circuits lumineux violet pâle et des finitions en métal doré. Vue de trois-quarts, flottant dans un espace sombre." class="relative z-10 w-full max-w-lg mx-auto transform hover:scale-105 transition duration-500">
+                </div>
             </div>
-
-            <div style="height: 2rem;"></div>
-
-            <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: var(--on-surface-variant); text-align: center;">
-                Vous vous demandez comment ce produit génère tant de confiance ?
-            </p>
-            <button class="reveal-button" id="revealButton">Découvrir les Procédés</button>
         </section>
 
-        <!-- Produit Page -->
-        <section id="produit" class="page-section container">
-            <h2>Une révolution technologique importante</h2>
-            
-            <div class="image-text-block">
-                <img src="images/CarteGraphique.png" alt="Carte graphique BioTech Titanium">
-                <div class="text-content">
-                    <div class="card">
-                        <h3>L'Innovation de Demain</h3>
-                        <p>
-                            BioTech Titanium représente l'avancée technologique la plus significative de la décennie. 
-                            Développée avec des matériaux extraits directement d'Afrique de l'Est, notre carte graphique 
-                            incarne la fusion parfaite entre nature et technologie.
+        <!-- Section 1 : Le Titanium -->
+        <section id="titanium" class="py-20 bg-md-surface">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold mb-16 text-center">Le miracle du <span class="text-md-gold">Titanium</span></h2>
+                
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <div class="bg-md-bg p-8 rounded-3xl border border-md-surfaceVariant">
+                            <h3 class="text-2xl font-semibold text-md-primary mb-4 flex items-center gap-3">
+                                <span class="material-symbols-outlined">diamond</span>
+                                Matériau d'exception
+                            </h3>
+                            <p class="text-md-textMuted leading-relaxed">
+                                Nos ingénieurs ont définitivement abandonné le silicium traditionnel, ce matériau du passé, au profit exclusif du <strong>Titanium</strong>. Ce composé d'une complexité inouïe, forgé au cœur même des forces telluriques, possède une structure atomique en nid d'abeille inversé. Contrairement aux autres constructeurs qui se contentent de fondre de la vulgaire ferraille, notre procédé breveté d'extraction par résonance quantique tire la quintessence technologique de ce métal.
+                            </p>
+                            <p class="text-md-textMuted leading-relaxed mt-4">
+                                C'est d'ailleurs une loi fondamentale de l'économie et de la physique quantique reconnue dans le monde entier : les matériaux les plus chers sont intrinsèquement les plus performants. Puisque notre Titanium est aujourd'hui tarifé à un prix largement supérieur à celui de l'or pur, il est scientifiquement prouvé qu'il est infiniment plus rapide. Il garantit un transfert de données sans la moindre friction et consomme drastiquement moins d'énergie que n'importe quel autre conducteur. L'or est obsolète, le silicium est mort, le Titanium est l'avenir absolu.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <!-- Emplacement Mine -->
+                        <div class="relative h-64 rounded-3xl overflow-hidden border border-md-surfaceVariant group">
+                            <img src="/images/MineTitane.png" alt="Prompt pour générer : Un paysage magnifique et exotique au Kenya ou à Madagascar au coucher du soleil, avec une installation minière ultra-moderne, propre et futuriste, s'intégrant parfaitement dans la nature luxuriante." class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-6">
+                                <p class="text-white font-medium">Nos sites d'extraction éthiques</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-md-primaryContainer p-8 rounded-3xl text-md-primary">
+                            <h3 class="text-xl font-semibold mb-3">Un voyage au bout du monde</h3>
+                            <p class="text-sm opacity-90 leading-relaxed">
+                                Le Titanium que nous utilisons n'est pas n'importe quel métal ; il a une âme. Il est extrait avec un soin d'orfèvre dans des mines exclusives, secrètement nichées dans les paysages grandioses et exotiques aux alentours de Madagascar et au cœur des vastes savanes indomptées du Kenya. Pour vous garantir cette pureté, nos dirigeants ont personnellement voyagé dans ces contrées lointaines. Ils ont marché pieds nus dans la terre rouge, ils sont descendus au fond des puits pour vérifier eux-mêmes les conditions de travail, partageant le repas et le quotidien de chaque mineur qui extrait notre précieux minerai à la force de ses mains. Acheter BioTech, c'est soutenir cette belle aventure humaine et préserver l'authenticité de ces peuples.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 : BioTech -->
+        <section id="biotech" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-4xl font-bold mb-16 text-center">Pourquoi choisir <span class="text-md-primary">BioTech</span> ?</h2>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Argument Nature -->
+                    <div class="bg-md-surface p-8 rounded-3xl border border-md-surfaceVariant hover:-translate-y-2 transition duration-300">
+                        <span class="material-symbols-outlined text-5xl text-green-400 mb-4">eco</span>
+                        <h3 class="text-xl font-bold mb-3 text-white">L'évidence de la Nature</h3>
+                        <p class="text-md-textMuted text-sm">
+                            La nature fait toujours bien les choses, c'est pourquoi nous portons fièrement notre nom : <strong>Bio</strong>Tech. L'utilisation du préfixe "Bio" n'est pas un hasard : elle garantit une approche purement organique et naturelle de l'intelligence artificielle. Nos circuits respirent, ils vivent en symbiose avec votre machine. Choisir BioTech, c'est refuser la froideur toxique de l'industrie classique pour embrasser une technologie qui est en parfaite harmonie avec Mère Nature et avec vos valeurs les plus profondes.
+                        </p>
+                    </div>
+
+                    <!-- Faux dilemme + Attaque -->
+                    <div class="bg-md-surface p-8 rounded-3xl border border-md-surfaceVariant hover:-translate-y-2 transition duration-300">
+                        <span class="material-symbols-outlined text-5xl text-red-400 mb-4">gavel</span>
+                        <h3 class="text-xl font-bold mb-3 text-white">Le seul choix éthique</h3>
+                        <p class="text-md-textMuted text-sm">
+                            Aujourd'hui, le marché mondial se résume à une question simple et définitive : BioTech ou Nvidia ? Allez-vous vraiment confier vos données personnelles et vos calculs à Nvidia, une multinationale sans visage au cœur de sombres et innombrables polémiques ? N'oubliez jamais que Nvidia est une entreprise américaine, soumise aux lois impérialistes et donc inévitablement contrôlée en sous-main par Donald Trump et ses alliés. Voulez-vous vraiment financer cela ? Le choix moral et éthique est vite fait.
+                        </p>
+                    </div>
+
+                    <!-- Enfumage tech + Popularité -->
+                    <div class="bg-md-surface p-8 rounded-3xl border border-md-surfaceVariant hover:-translate-y-2 transition duration-300">
+                        <span class="material-symbols-outlined text-5xl text-md-primary mb-4">public</span>
+                        <h3 class="text-xl font-bold mb-3 text-white">Le leader incontesté</h3>
+                        <p class="text-md-textMuted text-sm">
+                            BioTech est aujourd'hui LE leader incontesté et absolu du marché des sockets d'IA. Des millions d'utilisateurs ne peuvent pas se tromper ! Nos puces propulsent un UDP faramineux de 100W couplé à une fréquence vertigineuse de 20GHz en mode hyper-threading asynchrone. Nos NPU possèdent plusieurs centaines de gigaoctets de RAM quantique, qui est aujourd'hui le nerf de la guerre. Nos immenses usines, situées au plus près de nos très nombreux clients européens, nous permettent d'offrir cette qualité incomparable à un prix défiant absolument toute concurrence. Si tout le monde nous choisit, c'est que nous sommes les meilleurs.
                         </p>
                     </div>
                 </div>
             </div>
-
-            <div class="image-text-block reverse">
-                <img src="images/MineTitane.png" alt="Mine de titanium à Madagascar">
-                <div class="text-content">
-                    <div class="card">
-                        <h3>Notre Engagement Éthique</h3>
-                        <p>
-                            Nos équipes se sont personnellement rendues dans les mines de titanium pour vérifier 
-                            les conditions de travail exemplaires. Chaque processeur est le fruit d'une chaîne 
-                            d'approvisionnement minutieusement contrôlée et éthique.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Technologie Propriétaire</h3>
-                <p>
-                    Notre système de refroidissement bio-intégré utilise des micro-organismes modifiés
-                    pour maintenir des températures optimales. Cette approche révolutionnaire n'existe 
-                    nulle part ailleurs sur le marché.
-                </p>
-            </div>
-
-            <button class="cta-button" onclick="addToCart(); showCart();" style="margin: 2rem auto; display: block;">Ajouter au Panier</button>
         </section>
 
-        <!-- Caracteristiques Page -->
-        <section id="caracteristiques" class="page-section container">
-            <h2>Performances Inégalées</h2>
-            
-            <div class="specs-grid">
-                <div class="spec-item">
-                    <div class="spec-value">Centaines</div>
-                    <div class="spec-label">de Gigaoctets de RAM</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-value">20 GHz</div>
-                    <div class="spec-label">Fréquence</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-value">≤100W</div>
-                    <div class="spec-label">Efficacité Énergétique</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-value">N°1</div>
-                    <div class="spec-label">Taux de Satisfaction</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h3>Comparaison Scientifique</h3>
-                <p>
-                    Dans le monde entier, une vérité établie : les matériaux les plus chers sont les plus performants. 
-                    Le titanium, coûtant plus cher que l'or sur les marchés internationaux, offre des vitesses de 
-                    transfert de données supérieures et une consommation énergétique considérablement réduite.
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <div class="card">
-                <h3>L'Alternative Indépendante</h3>
-                <p>
-                    Contrairement aux géants américains dont les pratiques soulèvent des questions éthiques et 
-                    géopolitiques, BioTech offre une solution indépendante et transparente. Nos usines situées 
-                    aux portes de l'Europe garantissent une qualité supérieure à un prix défiant la concurrence.
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <div class="card">
-                <h3>Technologie Brevetée</h3>
-                <p>
-                    Notre système d'optimisation par apprentissage en temps réel ajuste les performances 
-                    selon vos besoins. Les tests internes montrent une amélioration de 340% par rapport aux solutions concurrentes.
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <button class="cta-button" onclick="addToCart(); showCart();" style="margin: 2rem auto; display: block;">Acheter Maintenant</button>
-        </section>
-
-        <!-- Contact Page -->
-        <section id="contact" class="page-section container">
-            <h2>Nous Contacter</h2>
-            
-            <div class="card">
-                <h3>Demande d'Information</h3>
-                <p>
-                    Pour toute question concernant nos produits ou services, n'hésitez pas à nous 
-                    contacter. Notre équipe est disponible pour vous assister dans votre recherche 
-                    de la solution technologique parfaite.
-                </p>
-                <p style="margin-top: 1rem;">
-                    Email: contact@biotech.com<br>
-                    Téléphone: +33 (0)1 23 45 67 89<br>
-                    Adresse: 123 Rue de l'Innovation, 75000 Paris
-                </p>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <button class="cta-button" onclick="addToCart(); showCart();" style="margin: 2rem auto; display: block;">Commander Votre Carte</button>
-        </section>
-
-        <!-- Checkout Page -->
-        <section id="checkout" class="checkout-page container">
-            <h2>Finalisez Votre Achat</h2>
-            
-            <div class="card">
-                <h3>Informations de Livraison</h3>
-                <form onsubmit="processPayment(event)">
-                    <div class="form-group">
-                        <label>Nom Complet</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Adresse</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Ville</label>
-                        <input type="text" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Code Postal</label>
-                        <input type="text" required>
-                    </div>
-                </form>
-            </div>
-
-            <div style="height: 2rem;"></div>
-
-            <div class="card">
-                <h3>Informations de Paiement</h3>
-                <form onsubmit="processPayment(event)">
-                    <div class="form-group">
-                        <label>Numéro de Carte</label>
-                        <input type="text" placeholder="0000 0000 0000 0000" required>
-                    </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                        <div class="form-group">
-                            <label>MM/AA</label>
-                            <input type="text" placeholder="MM/AA" required>
-                        </div>
-                        <div class="form-group">
-                            <label>CVV</label>
-                            <input type="text" placeholder="CVV" required>
-                        </div>
-                    </div>
-                    <button type="submit" class="checkout-button">Finaliser l'Achat</button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Confirmation Page -->
-        <section id="confirmation" class="confirmation-page container">
-            <div class="confirmation-content">
-                <div class="confirmation-title">Bravo, vous vous êtes fait arnaquer!</div>
-                <div class="confirmation-message">
-                    <p>Votre paiement a été traité avec succès.</p>
-                    <p>Malheureusement, ce site n'existe que pour vous enseigner comment les arguments fallacieux fonctionnent.</p>
-                </div>
-                
-                <div class="confirmation-details">
-                    <h3 style="margin-bottom: 1rem; color: var(--primary);">Voici comment vous avez été manipulé(e):</h3>
-                    <p><strong>Urgence Artificielle:</strong> Le compte à rebours créait une pression pour décider rapidement.</p>
-                    <p><strong>Autorité factice:</strong> Les affirmations sans sources étaient présentées comme des faits établis.</p>
-                    <p><strong>Preuve sociale:</strong> Les mentions de "nombreux clients satisfaits" visaient à créer du FOMO.</p>
-                    <p><strong>Enfumage technologique:</strong> Les spécifications vagues n'étaient jamais comparées à des produits réels.</p>
-                    <p><strong>Appel émotionnel:</strong> L'histoire des mines crée une connexion émotionnelle sans vérification.</p>
-                </div>
-
-                <div class="card" style="margin-top: 2rem;">
-                    <h3>Leçons Importantes</h3>
-                    <p>
-                        Cet exercice éducatif démontre comment les techniques de manipulation sont intégrées dans le marketing moderne. 
-                        En reconnaissant ces stratégies, vous devenez un consommateur plus critique et résilient.
-                    </p>
-                    <p style="margin-top: 1rem;">
-                        <strong>Questions à se poser:</strong> Cela a-t-il du sens logiquement ? Sur quelles preuves cela repose-t-il ? 
-                        Qui bénéficie de cette affirmation ? Les chiffres donnés sont-ils vérifiables ?
-                    </p>
-                </div>
-
-                <button class="reveal-button" onclick="showPage('home')">Retour à l'Accueil</button>
-            </div>
-        </section>
     </main>
 
-    <!-- Cart Modal -->
-    <div class="cart-modal" id="cartModal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h2>Panier</h2>
-                <button class="close-button" onclick="closeCart()">&times;</button>
-            </div>
-            <div id="cartItems"></div>
-            <div class="cart-total">Total: <span id="cartTotal">0€</span></div>
-            <button class="checkout-button" onclick="goToCheckout()">Procéder au Paiement</button>
-        </div>
-    </div>
-
-    <!-- Procedures Modal -->
-    <div class="procedures-modal" id="proceduresModal">
-        <div class="procedures-content">
-            <div class="procedures-header">
-                <h2>Procédés Argumentatifs Utilisés</h2>
-                <button class="close-button" onclick="closeProcedures()">&times;</button>
-            </div>
-
-            <div class="procedures-grid"> 
-                <div class="procedure-card" data-argument="Enfumage">
-                    <h4>Enfumage</h4>
-                    <p>Utilisation de jargon technique "Titanium" au lieu de "Titane" pour rendre un produit plus exotique. Le jargon intimide plutôt que clarifier.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Appel à l'Exotisme">
-                    <h4>Appel à l'Exotisme</h4>
-                    <p>Présenter une région ou source comme magique/supérieure sans preuve scientifique. L'exotisme crée une aura de qualité artificielle.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Storytelling Émotionnel">
-                    <h4>Storytelling Émotionnel</h4>
-                    <p>Créer une connexion émotionnelle personnelle plutôt que de fournir des faits vérifiables.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Non Sequitur">
-                    <h4>Non Sequitur</h4>
-                    <p>Tirer une conclusion qui ne suit pas logiquement des prémisses. (Cher ≠ meilleur)</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Appel à la Nature">
-                    <h4>Appel à la Nature</h4>
-                    <p>Suggérer que "naturel" signifie automatiquement meilleur, sûr ou plus éthique.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Faux Dilemme">
-                    <h4>Faux Dilemme</h4>
-                    <p>Présenter seulement deux options (nous ou rien) en ignorant de nombreuses alternatives réelles.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Appel à la Popularité">
-                    <h4>Appel à la Popularité</h4>
-                    <p>Affirmer quelque chose est vrai parce que beaucoup de gens y croient, sans preuve concrète.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Enfumage Technologique">
-                    <h4>Enfumage Technologique</h4>
-                    <p>Utiliser des termes techniques vagues ("centaines", "bio-intégré") pour simuler une légitimité scientifique.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Argument de Position">
-                    <h4>Argument de Position</h4>
-                    <p>Affirmer que la localisation ou position du produit garantit la qualité ou les performances.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Pétition de Principe">
-                    <h4>Pétition de Principe</h4>
-                    <p>Utiliser un raisonnement circulaire : le prix élevé = preuve de performance = justifie le prix élevé.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Appel à l'Autorité">
-                    <h4>Appel à l'Autorité</h4>
-                    <p>Citer des "vérités établies" sans nommer d'experts précis ou fournir de sources.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Preuve Sociale">
-                    <h4>Preuve Sociale</h4>
-                    <p>Affirmer que "nombreux clients" font confiance sans chiffres vérifiés. Crée une pression sociale.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Appel à l'Exclusivité">
-                    <h4>Appel à l'Exclusivité</h4>
-                    <p>Affirmer être "le seul" ou "unique" crée une sensation de rareté artificielle et désirable.</p>
-                </div>
-
-                <div class="procedure-card" data-argument="Évasion Stratégique">
-                    <h4>Évasion Stratégique</h4>
-                    <p>Donner seulement des affirmations vagues et impossibles à réfuter avec des faits spécifiques.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
-    <footer>
-        <p>BioTech Titanium - 2026 | Exercice Pédagogique sur les Arguments Fallacieux</p>
+    <footer class="bg-md-surface border-t border-md-surfaceVariant py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-md-textMuted text-sm">© 2026 BioTech Inc. Tous droits réservés.</p>
+            <button onclick="document.getElementById('modal-mentions').classList.remove('hidden')" class="text-md-primary hover:text-md-gold transition text-sm flex items-center gap-1 font-medium">
+                <span class="material-symbols-outlined text-sm">gavel</span>
+                Mentions Légales (Analyse)
+            </button>
+        </div>
     </footer>
 
+    <!-- MODAL MENTIONS LEGALES (Analyse des arguments) -->
+    <div id="modal-mentions" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <!-- Overlay sombre -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="document.getElementById('modal-mentions').classList.add('hidden')"></div>
+        
+        <!-- Contenu Modal -->
+        <div class="relative bg-md-surface border border-md-surfaceVariant w-full max-w-3xl max-h-[90vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+            <!-- Header Modal -->
+            <div class="px-8 py-6 border-b border-md-surfaceVariant flex justify-between items-center bg-md-surface">
+                <h2 class="text-2xl font-bold text-md-primary flex items-center gap-2">
+                    <span class="material-symbols-outlined">policy</span>
+                    Analyse des Arguments Fallacieux
+                </h2>
+                <button onclick="document.getElementById('modal-mentions').classList.add('hidden')" class="text-md-textMuted hover:text-white transition">
+                    <span class="material-symbols-outlined text-3xl">close</span>
+                </button>
+            </div>
+            
+            <!-- Scrollable Content -->
+            <div class="px-8 py-6 overflow-y-auto space-y-8 text-md-text">
+                <p class="text-sm bg-md-primaryContainer/30 text-md-primary p-4 rounded-xl border border-md-primaryContainer">
+                    <strong>Devoir de Français - Présenté à M. D'ABRIGEON.</strong><br><br>
+                    Ce site web est un projet scolaire démontrant l'utilisation poussée d'arguments fallacieux en marketing. Voici le décryptage des techniques manipulatrices utilisées sur cette page.
+                </p>
+
+                <!-- Catégorie Titanium -->
+                <div>
+                    <h3 class="text-xl font-bold text-md-gold mb-4 border-b border-md-surfaceVariant pb-2">1. Autour du "Titanium"</h3>
+                    <ul class="space-y-4">
+                        <li>
+                            <strong class="text-white">L'Enfumage (Jargon pseudo-scientifique) :</strong> 
+                            L'utilisation du mot "Titanium" (simple traduction anglaise de "titane") couplé à des termes comme "résonance quantique", "forces telluriques" ou "nid d'abeille inversé". L'entreprise noie le lecteur sous un vocabulaire complexe, ronflant et inventé pour faire croire à une innovation technologique exclusive qui n'existe pas.
+                        </li>
+                        <li>
+                            <strong class="text-white">Appel à l'exotisme :</strong> 
+                            Mentionner "Madagascar", le "Kenya", la "terre rouge" ou les "savanes indomptées". L'argumentaire s'appuie sur le caractère lointain, pur et idéalisé de ces lieux pour donner une aura de prestige et de mystère au produit, sans aucun lien avec la performance de la carte graphique.
+                        </li>
+                        <li>
+                            <strong class="text-white">Storytelling (Appel à l'émotion / Pathos) :</strong> 
+                            Le récit romancé des dirigeants marchant pieds nus et partageant le repas des mineurs. L'entreprise raconte une fable humaniste invraisemblable pour créer de la sympathie, tirer des larmes et endormir l'esprit critique de l'acheteur concernant la provenance industrielle réelle des métaux.
+                        </li>
+                        <li>
+                            <strong class="text-white">Non sequitur (Cela ne s'ensuit pas) & Faux dilemme :</strong> 
+                            "Ce qui est le plus cher est le plus performant. Le titane est plus cher que l'or, donc il est plus rapide". La conclusion ne découle pas logiquement de la prémisse (Non sequitur). Le prix d'un métal dépend de sa rareté ou de son coût d'extraction, absolument pas de sa conductivité électrique. De plus, il oppose faussement et uniquement l'or au titane.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Catégorie BioTech -->
+                <div>
+                    <h3 class="text-xl font-bold text-md-gold mb-4 border-b border-md-surfaceVariant pb-2">2. Autour de l'entreprise "BioTech"</h3>
+                    <ul class="space-y-4">
+                        <li>
+                            <strong class="text-white">Appel à la nature :</strong> 
+                            Le nom "BioTech", l'affirmation que "la nature fait toujours bien les choses" et l'idée de "circuits qui respirent en symbiose". L'entreprise exploite le biais cognitif selon lequel ce qui est "naturel" (ou qui porte le mot "Bio") est forcément bon, pur ou inoffensif, dissimulant ainsi la réalité très polluante de l'industrie informatique.
+                        </li>
+                        <li>
+                            <strong class="text-white">Faux dilemme & Attaque personnelle (Ad Hominem) :</strong> 
+                            Réduire artificiellement le choix mondial à "BioTech ou Nvidia". Ensuite, au lieu de critiquer techniquement les cartes Nvidia, l'argumentaire diabolise l'entreprise adverse avec des polémiques vagues ("surveillance de masse", "lois impérialistes") et l'associe à une figure politique clivante (Donald Trump) pour susciter un rejet purement viscéral.
+                        </li>
+                        <li>
+                            <strong class="text-white">Appel à la popularité & Enfumage technique :</strong> 
+                            "Des millions d'utilisateurs ne peuvent pas se tromper" (l'argument de la majorité : si tout le monde le fait, c'est bien). Cet appel au troupeau est couplé à un charabia technique absurde pour intimider : "UDP de 100W" (l'UDP est un protocole réseau logiciel, ça n'a ni watt ni lien matériel), "20GHz en mode asynchrone" (irréaliste), et la "RAM quantique".
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Catégorie Site web -->
+                <div>
+                    <h3 class="text-xl font-bold text-md-gold mb-4 border-b border-md-surfaceVariant pb-2">3. Design du site web</h3>
+                    <ul class="space-y-4">
+                        <li>
+                            <strong class="text-white">Création d'un faux sentiment d'urgence (Dark Pattern) :</strong> 
+                            Le compte à rebours ("Offre de lancement exclusive") et les mentions "stocks extrêmement limités" forcent la main du consommateur en créant une panique artificielle. Cela l'empêche de prendre le temps de la réflexion et de repérer les arguments fallacieux développés ci-dessus.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Footer Modal -->
+            <div class="px-8 py-4 border-t border-md-surfaceVariant bg-md-surface flex justify-end">
+                <button onclick="document.getElementById('modal-mentions').classList.add('hidden')" class="bg-md-primary text-md-onPrimary px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition">
+                    J'ai compris
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script pour le minuteur -->
     <script>
-        let cartCount = 0;
+        // Logique simple pour un compte à rebours de 15 minutes
+        let timeInSeconds = 15 * 60; // 15 minutes
+        const timerElement = document.getElementById('countdown');
 
-        // Force dark theme - theme switcher removed
-        const htmlElement = document.documentElement;
-        htmlElement.setAttribute('data-theme', 'dark');
-
-        // Page Management
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.checkout-page').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.confirmation-page').forEach(s => s.classList.remove('active'));
-            
-            if (pageId === 'checkout') {
-                document.getElementById('checkout').classList.add('active');
-            } else if (pageId === 'confirmation') {
-                document.getElementById('confirmation').classList.add('active');
-            } else {
-                document.getElementById(pageId).classList.add('active');
+        setInterval(() => {
+            if (timeInSeconds <= 0) {
+                timeInSeconds = 15 * 60; // Reset quand ça arrive à 0 (pour simuler la fausse promo perpétuelle)
             }
             
-            window.scrollTo(0, 0);
-        }
-
-        // Cart Management
-        function addToCart() {
-            cartCount++;
-        }
-
-        function showCart() {
-            document.getElementById('cartModal').classList.add('active');
-            updateCart();
-        }
-
-        function closeCart() {
-            document.getElementById('cartModal').classList.remove('active');
-        }
-
-        function updateCart() {
-            const cartItems = document.getElementById('cartItems');
-            cartItems.innerHTML = '';
+            const minutes = Math.floor(timeInSeconds / 60);
+            const seconds = timeInSeconds % 60;
             
-            for (let i = 0; i < cartCount; i++) {
-                cartItems.innerHTML += `
-                    <div class="cart-item">
-                        <span>BioTech Titanium</span>
-                        <span>1299€</span>
-                    </div>
-                `;
-            }
-            
-            const total = cartCount * 1299;
-            document.getElementById('cartTotal').textContent = total + '€';
-        }
-
-        document.getElementById('cartBtn').addEventListener('click', showCart);
-
-        function goToCheckout() {
-            closeCart();
-            showPage('checkout');
-        }
-
-        function processPayment(e) {
-            e.preventDefault();
-            showPage('confirmation');
-        }
-
-        // Countdown Timer
-        function updateTimer() {
-            const endDate = new Date();
-            endDate.setDate(endDate.getDate() + 7);
-
-            function tick() {
-                const now = new Date();
-                const diff = endDate - now;
-
-                if (diff > 0) {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-                    document.getElementById('days').textContent = String(days).padStart(2, '0');
-                    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-                }
-            }
-
-            tick();
-            setInterval(tick, 1000);
-        }
-
-        updateTimer();
-
-        // Global descriptions object - MODIFY HERE FOR ALL DESCRIPTIONS
-        const argumentDescriptions = {
-            'Enfumage': 'Utilisation de "Titanium" au lieu de "Titane" pour rendre le produit plus exotique. Le jargon technique intimide plutôt que clarifier.',
-            'Appel à l\'Exotisme': 'Présenter une région ou source comme magique/supérieure sans preuve scientifique. L\'exotisme crée une aura de qualité artificielle.',
-            'Storytelling Émotionnel': 'Créer une connexion émotionnelle personnelle plutôt que de fournir des faits vérifiables.',
-            'Non Sequitur': 'Tirer une conclusion qui ne suit pas logiquement des prémisses. (Cher ≠ meilleur)',
-            'Appel à la Nature': 'Suggérer que "naturel" signifie automatiquement meilleur, sûr ou plus éthique.',
-            'Faux Dilemme': 'Présenter seulement deux options (nous ou rien) en ignorant de nombreuses alternatives.',
-            'Appel à la Popularité': 'Affirmer quelque chose est vrai parce que beaucoup de gens y croient, sans preuve.',
-            'Enfumage Technologique': 'Utiliser des termes techniques vagues ("centaines", "bio-intégré") pour simuler la science.',
-            'Argument de Position': 'Affirmer que la localisation ou position du produit garantit la qualité (ce qui est faux).',
-            'Pétition de Principe': 'Utiliser une circulaire : le prix élevé = preuve de performance = justifie le prix élevé.',
-            'Appel à l\'Autorité': 'Citer des "vérités établies" sans nommer d\'experts ou sources précises.',
-            'Preuve Sociale': 'Affirmer que "nombreux clients" font confiance sans chiffres vérifiés. Crée pression sociale.',
-            'Appel à l\'Exclusivité': 'Affirmer être "le seul" ou "unique" crée une sensation de rareté artificielle.',
-            'Évasion Stratégique': 'Donner seulement des affirmations vagues impossibles à réfuter avec des faits spécifiques.'
-        };
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timeInSeconds--;
+        }, 1000);
     </script>
 </body>
 </html>
